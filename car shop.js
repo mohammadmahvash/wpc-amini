@@ -1,8 +1,9 @@
 let document = $;
-let searchContainer = $.querySelector(".search-input");
-let search = $.querySelector("input");
+let searchContainer = $.querySelector(".search-box");
+let search = $.querySelector("input.form-control");
 let suggestionsBox = $.querySelector(".autocom-box");
-let searchButton = $.querySelector(".icon");
+let searchButton = $.querySelector("search-button");
+let buttons = $.querySelectorAll("button.btn");
 
 let carsArray = [
   {
@@ -73,46 +74,45 @@ let carsArray = [
   },
 ];
 function generateProducts() {
-    let productsContainer = $.querySelector(".products-container");
-    let productsContainerFragment = new DocumentFragment();
-    productsContainer.innerHTML = "";
-    products.forEach((product) => {
-      let outerProductContainer = $.createElement("div");
-      outerProductContainer.classList.add("product-container-padding");
-      outerProductContainer.insertAdjacentHTML(
-        "beforeend",
-        '<a class="product-container" href="./product details.html?id=' +
-          product.id +
-          '"target="_blank"><div class="product-details-top"><div class="product-image-container"><img src="' +
-          product.image +
-          '" alt="' +
-          product.title +
-          '" /><div class="product-description">' +
-          product.description +
-          '</div></div><div class="product-title">' +
-          product.title +
-          '</div></div><div class="product-details-bottom"><div class="product-price">$' +
-          product.price +
-          '</div><div class="add-to-cart" onclick="addingToCart(' +
-          product.id +
-          ',event)">Add to Cart</div></div></a>'
-      );
-      productsContainerFragment.appendChild(outerProductContainer);
-    });
-    productsContainer.append(productsContainerFragment);
+  let productsContainer = $.querySelector(".products-container");
+  let productsContainerFragment = new DocumentFragment();
+  productsContainer.innerHTML = "";
+  products.forEach((product) => {
+    let outerProductContainer = $.createElement("div");
+    outerProductContainer.classList.add("product-container-padding");
+    outerProductContainer.insertAdjacentHTML(
+      "beforeend",
+      '<a class="product-container" href="./product details.html?id=' +
+        product.id +
+        '"target="_blank"><div class="product-details-top"><div class="product-image-container"><img src="' +
+        product.image +
+        '" alt="' +
+        product.title +
+        '" /><div class="product-description">' +
+        product.description +
+        '</div></div><div class="product-title">' +
+        product.title +
+        '</div></div><div class="product-details-bottom"><div class="product-price">$' +
+        product.price +
+        '</div><div class="add-to-cart" onclick="addingToCart(' +
+        product.id +
+        ',event)">Add to Cart</div></div></a>'
+    );
+    productsContainerFragment.appendChild(outerProductContainer);
+  });
+  productsContainer.append(productsContainerFragment);
 }
 function getFromLocalStorage() {
-    // let localFavoriteProducts;
-    // if (localStorage.getItem("localFavoriteProducts")) {
-    //   localFavoriteProducts = JSON.parse(
-    //     localStorage.getItem("localFavoriteProducts")
-    //   );
-    //   productsInCart = localFavoriteProducts;
-    // } else {
-    //   productsInCart = [];
-    // }
+  // let localFavoriteProducts;
+  // if (localStorage.getItem("localFavoriteProducts")) {
+  //   localFavoriteProducts = JSON.parse(
+  //     localStorage.getItem("localFavoriteProducts")
+  //   );
+  //   productsInCart = localFavoriteProducts;
+  // } else {
+  //   productsInCart = [];
+  // }
 }
-
 
 function searching() {
   let searchValue = search.value.toLowerCase();
@@ -150,6 +150,11 @@ function selectingSuggestion(event) {
   search.value = event.target.textContent;
   searchContainer.classList.remove("active");
 }
-search.addEventListener("input", searching);
+buttons.forEach((button) => {
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+    });
+  });
 generateProducts();
+search.addEventListener("input", searching);
 window.addEventListener("load", getFromLocalStorage);
