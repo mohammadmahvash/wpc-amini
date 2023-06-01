@@ -136,6 +136,7 @@ function searching() {
     searchContainer.classList.remove("active");
   }
 }
+
 function suggestionsBoxGenerator(selectedSuggestions) {
   let suggestionsBoxFragment = new DocumentFragment();
   selectedSuggestions.forEach(function (selectedSuggestion) {
@@ -153,3 +154,9 @@ function selectingSuggestion(event) {
 search.addEventListener("input", searching);
 generateProducts();
 window.addEventListener("load", getFromLocalStorage);
+
+function test(){
+  console.log("test");
+}
+
+
